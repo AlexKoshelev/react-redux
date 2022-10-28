@@ -27,7 +27,9 @@ const taskSlice = createSlice({
         (el) => el.id !== action.payload.id
       );
     },
-    create() {},
+    create(state, action) {
+      state.entities.push(action.payload);
+    },
     taskRequested(state) {
       state.isLoading = true;
     },
@@ -56,8 +58,13 @@ export const loadTasks = () => async (dispatch) => {
 export const completeTask = (id) => (dispatch, getState) => {
   dispatch(update({ id, completed: true }));
 };
-export const createTask = () => (dispatch, getState) => {
-  dispatch(create());
+export const taskCreated = () => async (dispatch, getState) => {
+  try {
+    const data = await todosService.post();
+    dispatch(create(data));
+  } catch (error) {
+    dispatch(setError(error.message));
+  }
 };
 
 export function titleChanged(id) {

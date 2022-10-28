@@ -6,6 +6,7 @@ import {
   getTasks,
   getTasksLoadingStatus,
   loadTasks,
+  taskCreated,
   taskDeleted,
   titleChanged,
 } from "./store/task";
@@ -57,7 +58,7 @@ const App = () => {
           </li>
         ))}
       </ul>
-      <button onClick={() => deletedTask()}>Создать задачу</button>
+      <button onClick={() => dispatch(taskCreated())}>Создать задачу</button>
     </>
   );
 };
